@@ -3,118 +3,118 @@ import 'package:rest_api/product.dart';
 import 'package:rest_api/services.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Recipe App',
+      title: 'Product List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RecipeListPage(),
+      home: const ProductListPage(),
     );
   }
 }
 
-class RecipeListPage extends StatefulWidget {
+class ProductListPage extends StatefulWidget {
+  const ProductListPage({super.key});
+
   @override
-  _RecipeListPageState createState() => _RecipeListPageState();
+  _ProductListPageState createState() => _ProductListPageState();
 }
 
-class _RecipeListPageState extends State<RecipeListPage> {
+class _ProductListPageState extends State<ProductListPage> {
   late Future<Product> _futureProduct;
 
   @override
   void initState() {
     super.initState();
-    _futureProduct = ApiService().fetchRecipes();
+    _futureProduct = ApiService().fetchProducts();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipes'),
+        title: const Text('Product List'),
       ),
       body: FutureBuilder<Product>(
         future: _futureProduct,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.recipes == null) {
-            return Center(child: Text('No recipes found.'));
+          } else if (!snapshot.hasData || snapshot.data!.products == null) {
+            return const Center(child: Text('No products found.'));
           } else {
-            final recipes = snapshot.data!.recipes!;
+            final products = snapshot.data!.products!;
             return ListView.builder(
-              itemCount: recipes.length,
+              itemCount: products.length,
               itemBuilder: (context, index) {
-                final recipe = recipes[index];
+                final product = products[index];
                 return Card(
-                  margin: EdgeInsets.all(8.0),
-                  elevation: 5,
+                  margin: const EdgeInsets.all(8.0),
+                  elevation: 4,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
-                            recipe.image ?? '',
+                            product.thumbnail ?? '',
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 16.0),
+                        const SizedBox(width: 16.0),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                recipe.name ?? 'No Name',
-                                style: TextStyle(
+                                product.title ?? 'No Title',
+                                style: const TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4.0),
+                              const SizedBox(height: 4.0),
                               Text(
-                                '${recipe.prepTimeMinutes ?? 0} mins prep | ${recipe.cookTimeMinutes ?? 0} mins cook',
+                                '\$${product.price?.toStringAsFixed(2) ?? '0.00'}',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.green[700],
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 4.0),
+                              Text(
+                                product.category ?? 'No Category',
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   color: Colors.grey[600],
                                 ),
                               ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                recipe.difficulty ?? 'Unknown',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
+                              const SizedBox(height: 4.0),
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 16.0,
-                                  ),
-                                  SizedBox(width: 4.0),
+                                  const Icon(Icons.star, color: Colors.amber, size: 16.0),
+                                  const SizedBox(width: 4.0),
                                   Text(
-                                    '${recipe.rating?.toStringAsFixed(1) ?? 'N/A'} (${recipe.reviewCount ?? 0} reviews)',
-                                    style: TextStyle(
+                                    '${product.rating?.toStringAsFixed(1) ?? 'N/A'} stars',
+                                    style: const TextStyle(
                                       fontSize: 14.0,
-                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ],
