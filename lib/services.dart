@@ -1,18 +1,19 @@
-import 'package:rest_api/product.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-class ProductService {
-  final String baseUrl = 'https://fakestoreapi.com/products';
+import 'package:rest_api/product.dart';
+ // Import your Product and Recipes classes
 
-  Future<List<Product>> fetchProducts() async {
-    final response = await http.get(Uri.parse(baseUrl));
+class ApiService {
+  final String _baseUrl = 'https://dummyjson.com/recipes';
+
+  Future<Product> fetchRecipes() async {
+    final response = await http.get(Uri.parse(_baseUrl));
 
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => Product.fromJson(json)).toList();
+      final jsonResponse = json.decode(response.body);
+      return Product.fromJson(jsonResponse);
     } else {
-      throw Exception('Failed to load products');
+      throw Exception('Failed to load recipes');
     }
   }
 }
