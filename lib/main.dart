@@ -12,124 +12,103 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Product List',
+      title: 'User List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ProductListPage(),
+      home: const UserListScreen(),
     );
   }
 }
 
-class ProductListPage extends StatefulWidget {
-  const ProductListPage({super.key});
+class UserListScreen extends StatefulWidget {
+  const UserListScreen({Key? key}) : super(key: key);
 
   @override
-  _ProductListPageState createState() => _ProductListPageState();
+  _UserListScreenState createState() => _UserListScreenState();
 }
 
-class _ProductListPageState extends State<ProductListPage> {
-  late Future<Product> _futureProduct;
+class _UserListScreenState extends State<UserListScreen> {
+  late Future<Employee> futureEmployee;
 
   @override
   void initState() {
     super.initState();
-    _futureProduct = ApiService().fetchProducts();
+    futureEmployee = EmployeeService.fetchEmployeeData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product List'),
+        title: const Text('Employee List'),
       ),
-      body: FutureBuilder<Product>(
-        future: _futureProduct,
+      body: FutureBuilder<Employee>(
+        future: futureEmployee,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.products == null) {
-            return const Center(child: Text('No products found.'));
-          } else {
-            final products = snapshot.data!.products!;
-            return ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return Card(
-                  margin: const EdgeInsets.all(8.0),
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            product.thumbnail ?? '',
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                product.title ?? 'No Title',
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                '\$${product.price?.toStringAsFixed(2) ?? '0.00'}',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.green[700],
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                product.category ?? 'No Category',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              Row(
-                                children: [
-                                  const Icon(Icons.star, color: Colors.amber, size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    '${product.rating?.toStringAsFixed(1) ?? 'N/A'} stars',
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+          } else if (!snapshot.hasData || snapshot.data!.users!.isEmpty) {
+            return const Center(child: Text('No data found'));
+          }
+
+          final users = snapshot.data!.users!;
+
+          return ListView.builder(
+            itemCount: users.length,
+            itemBuilder: (context, index) {
+              return UserCard(user: users[index]);
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class UserCard extends StatelessWidget {
+  final Users user;
+
+  const UserCard({super.key, required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(user.image ?? ''),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${user.firstName} ${user.lastName}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
-                );
-              },
-            );
-          }
-        },
+                  const SizedBox(height: 4),
+                  Text('Age: ${user.age}'),
+                  Text('Email: ${user.email}'),
+                  Text('Phone: ${user.phone}'),
+                  Text('Birth: ${user.birthDate}'),
+                  Text('Birth: ${user.ein}'),
+                  Text('Birth: ${user.ssn}'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

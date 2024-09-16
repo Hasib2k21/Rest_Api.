@@ -1,16 +1,16 @@
-class Product {
-  List<Products>? products;
+class Employee {
+  List<Users>? users;
   int? total;
   int? skip;
   int? limit;
 
-  Product({this.products, this.total, this.skip, this.limit});
+  Employee({this.users, this.total, this.skip, this.limit});
 
-  Product.fromJson(Map<String, dynamic> json) {
-    if (json['products'] != null) {
-      products = <Products>[];
-      json['products'].forEach((v) {
-        products!.add(Products.fromJson(v));
+  Employee.fromJson(Map<String, dynamic> json) {
+    if (json['users'] != null) {
+      users = <Users>[];
+      json['users'].forEach((v) {
+        users!.add(Users.fromJson(v));
       });
     }
     total = json['total'];
@@ -20,8 +20,8 @@ class Product {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (products != null) {
-      data['products'] = products!.map((v) => v.toJson()).toList();
+    if (users != null) {
+      data['users'] = users!.map((v) => v.toJson()).toList();
     }
     data['total'] = total;
     data['skip'] = skip;
@@ -30,196 +30,305 @@ class Product {
   }
 }
 
-class Products {
+class Users {
   int? id;
-  String? title;
-  String? description;
-  String? category;
-  double? price;
-  double? discountPercentage;
-  double? rating;
-  int? stock;
-  List<String>? tags;
-  String? brand;
-  String? sku;
-  int? weight;
-  Dimensions? dimensions;
-  String? warrantyInformation;
-  String? shippingInformation;
-  String? availabilityStatus;
-  List<Reviews>? reviews;
-  String? returnPolicy;
-  int? minimumOrderQuantity;
-  Meta? meta;
-  List<String>? images;
-  String? thumbnail;
-
-  Products(
-      {this.id,
-        this.title,
-        this.description,
-        this.category,
-        this.price,
-        this.discountPercentage,
-        this.rating,
-        this.stock,
-        this.tags,
-        this.brand,
-        this.sku,
-        this.weight,
-        this.dimensions,
-        this.warrantyInformation,
-        this.shippingInformation,
-        this.availabilityStatus,
-        this.reviews,
-        this.returnPolicy,
-        this.minimumOrderQuantity,
-        this.meta,
-        this.images,
-        this.thumbnail});
-
-  Products.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    description = json['description'];
-    category = json['category'];
-    price = json['price'];
-    discountPercentage = json['discountPercentage'];
-    rating = json['rating'];
-    stock = json['stock'];
-    tags = json['tags'].cast<String>();
-    brand = json['brand'];
-    sku = json['sku'];
-    weight = json['weight'];
-    dimensions = json['dimensions'] != null
-        ? Dimensions.fromJson(json['dimensions'])
-        : null;
-    warrantyInformation = json['warrantyInformation'];
-    shippingInformation = json['shippingInformation'];
-    availabilityStatus = json['availabilityStatus'];
-    if (json['reviews'] != null) {
-      reviews = <Reviews>[];
-      json['reviews'].forEach((v) {
-        reviews!.add(Reviews.fromJson(v));
-      });
-    }
-    returnPolicy = json['returnPolicy'];
-    minimumOrderQuantity = json['minimumOrderQuantity'];
-    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
-    images = json['images'].cast<String>();
-    thumbnail = json['thumbnail'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['description'] = description;
-    data['category'] = category;
-    data['price'] = price;
-    data['discountPercentage'] = discountPercentage;
-    data['rating'] = rating;
-    data['stock'] = stock;
-    data['tags'] = tags;
-    data['brand'] = brand;
-    data['sku'] = sku;
-    data['weight'] = weight;
-    if (dimensions != null) {
-      data['dimensions'] = dimensions!.toJson();
-    }
-    data['warrantyInformation'] = warrantyInformation;
-    data['shippingInformation'] = shippingInformation;
-    data['availabilityStatus'] = availabilityStatus;
-    if (reviews != null) {
-      data['reviews'] = reviews!.map((v) => v.toJson()).toList();
-    }
-    data['returnPolicy'] = returnPolicy;
-    data['minimumOrderQuantity'] = minimumOrderQuantity;
-    if (meta != null) {
-      data['meta'] = meta!.toJson();
-    }
-    data['images'] = images;
-    data['thumbnail'] = thumbnail;
-    return data;
-  }
-}
-
-class Dimensions {
-  double? width;
+  String? firstName;
+  String? lastName;
+  String? maidenName;
+  int? age;
+  String? gender;
+  String? email;
+  String? phone;
+  String? username;
+  String? password;
+  String? birthDate;
+  String? image;
+  String? bloodGroup;
   double? height;
-  double? depth;
+  double? weight;
+  String? eyeColor;
+  Hair? hair;
+  String? ip;
+  Address? address;
+  String? macAddress;
+  String? university;
+  Bank? bank;
+  Company? company;
+  String? ein;
+  String? ssn;
+  String? userAgent;
+  Crypto? crypto;
+  String? role;
 
-  Dimensions({this.width, this.height, this.depth});
+  Users(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.maidenName,
+      this.age,
+      this.gender,
+      this.email,
+      this.phone,
+      this.username,
+      this.password,
+      this.birthDate,
+      this.image,
+      this.bloodGroup,
+      this.height,
+      this.weight,
+      this.eyeColor,
+      this.hair,
+      this.ip,
+      this.address,
+      this.macAddress,
+      this.university,
+      this.bank,
+      this.company,
+      this.ein,
+      this.ssn,
+      this.userAgent,
+      this.crypto,
+      this.role});
 
-  Dimensions.fromJson(Map<String, dynamic> json) {
-    width = json['width'];
+  Users.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    maidenName = json['maidenName'];
+    age = json['age'];
+    gender = json['gender'];
+    email = json['email'];
+    phone = json['phone'];
+    username = json['username'];
+    password = json['password'];
+    birthDate = json['birthDate'];
+    image = json['image'];
+    bloodGroup = json['bloodGroup'];
     height = json['height'];
-    depth = json['depth'];
+    weight = json['weight'];
+    eyeColor = json['eyeColor'];
+    hair = json['hair'] != null ? Hair.fromJson(json['hair']) : null;
+    ip = json['ip'];
+    address =
+        json['address'] != null ? Address.fromJson(json['address']) : null;
+    macAddress = json['macAddress'];
+    university = json['university'];
+    bank = json['bank'] != null ? Bank.fromJson(json['bank']) : null;
+    company =
+        json['company'] != null ? Company.fromJson(json['company']) : null;
+    ein = json['ein'];
+    ssn = json['ssn'];
+    userAgent = json['userAgent'];
+    crypto = json['crypto'] != null ? Crypto.fromJson(json['crypto']) : null;
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['width'] = width;
-    data['height'] = height;
-    data['depth'] = depth;
+    data['id'] = this.id;
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
+    data['maidenName'] = this.maidenName;
+    data['age'] = this.age;
+    data['gender'] = this.gender;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['username'] = this.username;
+    data['password'] = this.password;
+    data['birthDate'] = this.birthDate;
+    data['image'] = this.image;
+    data['bloodGroup'] = this.bloodGroup;
+    data['height'] = this.height;
+    data['weight'] = this.weight;
+    data['eyeColor'] = this.eyeColor;
+    if (this.hair != null) {
+      data['hair'] = this.hair!.toJson();
+    }
+    data['ip'] = this.ip;
+    if (this.address != null) {
+      data['address'] = this.address!.toJson();
+    }
+    data['macAddress'] = this.macAddress;
+    data['university'] = this.university;
+    if (this.bank != null) {
+      data['bank'] = this.bank!.toJson();
+    }
+    if (this.company != null) {
+      data['company'] = this.company!.toJson();
+    }
+    data['ein'] = this.ein;
+    data['ssn'] = this.ssn;
+    data['userAgent'] = this.userAgent;
+    if (this.crypto != null) {
+      data['crypto'] = this.crypto!.toJson();
+    }
+    data['role'] = this.role;
     return data;
   }
 }
 
-class Reviews {
-  int? rating;
-  String? comment;
-  String? date;
-  String? reviewerName;
-  String? reviewerEmail;
+class Hair {
+  String? color;
+  String? type;
 
-  Reviews(
-      {this.rating,
-        this.comment,
-        this.date,
-        this.reviewerName,
-        this.reviewerEmail});
+  Hair({this.color, this.type});
 
-  Reviews.fromJson(Map<String, dynamic> json) {
-    rating = json['rating'];
-    comment = json['comment'];
-    date = json['date'];
-    reviewerName = json['reviewerName'];
-    reviewerEmail = json['reviewerEmail'];
+  Hair.fromJson(Map<String, dynamic> json) {
+    color = json['color'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['rating'] = rating;
-    data['comment'] = comment;
-    data['date'] = date;
-    data['reviewerName'] = reviewerName;
-    data['reviewerEmail'] = reviewerEmail;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['color'] = this.color;
+    data['type'] = this.type;
     return data;
   }
 }
 
-class Meta {
-  String? createdAt;
-  String? updatedAt;
-  String? barcode;
-  String? qrCode;
+class Address {
+  String? address;
+  String? city;
+  String? state;
+  String? stateCode;
+  String? postalCode;
+  Coordinates? coordinates;
+  String? country;
 
-  Meta({this.createdAt, this.updatedAt, this.barcode, this.qrCode});
+  Address(
+      {this.address,
+      this.city,
+      this.state,
+      this.stateCode,
+      this.postalCode,
+      this.coordinates,
+      this.country});
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    barcode = json['barcode'];
-    qrCode = json['qrCode'];
+  Address.fromJson(Map<String, dynamic> json) {
+    address = json['address'];
+    city = json['city'];
+    state = json['state'];
+    stateCode = json['stateCode'];
+    postalCode = json['postalCode'];
+    coordinates = json['coordinates'] != null
+        ? new Coordinates.fromJson(json['coordinates'])
+        : null;
+    country = json['country'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['barcode'] = barcode;
-    data['qrCode'] = qrCode;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['address'] = this.address;
+    data['city'] = this.city;
+    data['state'] = this.state;
+    data['stateCode'] = this.stateCode;
+    data['postalCode'] = this.postalCode;
+    if (this.coordinates != null) {
+      data['coordinates'] = this.coordinates!.toJson();
+    }
+    data['country'] = this.country;
+    return data;
+  }
+}
+
+class Coordinates {
+  double? lat;
+  double? lng;
+
+  Coordinates({this.lat, this.lng});
+
+  Coordinates.fromJson(Map<String, dynamic> json) {
+    lat = json['lat'];
+    lng = json['lng'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    return data;
+  }
+}
+
+class Bank {
+  String? cardExpire;
+  String? cardNumber;
+  String? cardType;
+  String? currency;
+  String? iban;
+
+  Bank(
+      {this.cardExpire,
+      this.cardNumber,
+      this.cardType,
+      this.currency,
+      this.iban});
+
+  Bank.fromJson(Map<String, dynamic> json) {
+    cardExpire = json['cardExpire'];
+    cardNumber = json['cardNumber'];
+    cardType = json['cardType'];
+    currency = json['currency'];
+    iban = json['iban'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['cardExpire'] = this.cardExpire;
+    data['cardNumber'] = this.cardNumber;
+    data['cardType'] = this.cardType;
+    data['currency'] = this.currency;
+    data['iban'] = this.iban;
+    return data;
+  }
+}
+
+class Company {
+  String? department;
+  String? name;
+  String? title;
+  Address? address;
+
+  Company({this.department, this.name, this.title, this.address});
+
+  Company.fromJson(Map<String, dynamic> json) {
+    department = json['department'];
+    name = json['name'];
+    title = json['title'];
+    address =
+        json['address'] != null ? new Address.fromJson(json['address']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['department'] = this.department;
+    data['name'] = this.name;
+    data['title'] = this.title;
+    if (this.address != null) {
+      data['address'] = this.address!.toJson();
+    }
+    return data;
+  }
+}
+
+class Crypto {
+  String? coin;
+  String? wallet;
+  String? network;
+
+  Crypto({this.coin, this.wallet, this.network});
+
+  Crypto.fromJson(Map<String, dynamic> json) {
+    coin = json['coin'];
+    wallet = json['wallet'];
+    network = json['network'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['coin'] = this.coin;
+    data['wallet'] = this.wallet;
+    data['network'] = this.network;
     return data;
   }
 }
